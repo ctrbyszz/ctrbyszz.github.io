@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RealChillCraft</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e1e1e;
+      color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: linear-gradient(to right, #ff9900, #ffcc00);
+      padding: 20px;
+      text-align: center;
+      animation: fadeInDown 1s ease;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 36px;
+    }
+
+    .status-bar {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    .copy-button {
+      margin-top: 10px;
+      background: #222;
+      color: #fff;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .copy-button:hover {
+      background: #444;
+    }
+
+    .container {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      animation: fadeIn 1.2s ease-in;
+    }
+
+    .section-title {
+      font-size: 28px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ffaa00;
+      display: inline-block;
+    }
+
+    .shop-item {
+      background-color: #333;
+      border: 1px solid #444;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .shop-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(255, 170, 0, 0.5);
+    }
+
+    .buy-button {
+      background: linear-gradient(to right, #ffaa00, #ffdd33);
+      color: #1e1e1e;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .buy-button:hover {
+      background: linear-gradient(to right, #ffdd33, #ffaa00);
+      transform: scale(1.05);
+    }
+
+    footer {
+      background-color: #2c2c2c;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      animation: fadeInUp 1s ease;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background: rgba(0, 0, 0, 0.7);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+      background-color: #2c2c2c;
+      margin: 10% auto;
+      padding: 30px;
+      border: 1px solid #555;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 10px;
+      position: relative;
+      text-align: center;
+    }
+
+    .modal h2 {
+      color: #ffaa00;
+      margin-bottom: 10px;
+    }
+
+    .modal p {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      color: #ccc;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: #fff;
+    }
+
+    /* Responsywny modal dla małych ekranów */
+    @media (max-width: 600px) {
+      .modal-content {
+        width: 95%;
+        margin: 20% auto;
+        padding: 20px;
+      }
+
+      .modal p {
+        font-size: 15px;
+      }
+
+      .modal h2 {
+        font-size: 20px;
+      }
+
+      .close {
+        font-size: 28px;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>RealChillCraft - Serwer Minecraft</h1>
+  <div class="status-bar">
+    👥 Gracze online: <span id="player-count">...</span>
+  </div>
+  <button class="copy-button" onclick="copyServerIP()">📋 Skopiuj IP: RealChillCraft.aternos.me</button>
+</header>
+
+<div class="container">
+  <section>
+    <h2 class="section-title">O serwerze</h2>
+    <p>
+      RealChillCraft to serwer z trybami: Survival i BoxFight (new).
+      Miła społeczność i administracja.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Sklep</h2>
+
+    <div class="shop-item">
+      <h3>Ranga "CHVIP+"</h3>
+      <p>Daje ci kontakt z właścicielem, strefę CHVIP+ na trybie BoxFight oraz kita ULTIMATE.</p>
+      <button class="buy-button" onclick="openModal()">Kup za 15 PLN</button>
+    </div>
+
+    <div class="shop-item">
+      <h3>Ranga "CHILLOWIEC"</h3>
+      <p>Dodaje ci rangę "CHILLOWIEC" na serwerze Discord i Minecraft.</p>
+      <button class="buy-button" onclick="openModal()">Kup za 9,99 PLN</button>
+    </div>
+
+    <div class="shop-item">
+      <h3>Promo na Discordzie</h3>
+      <p>Pokażemy twój nick (z Minecrafta i Discorda) na kanale #🔥| promowanie.</p>
+      <button class="buy-button" onclick="openModal()">Kup za 5 PLN</button>
+    </div>
+
+     <div class="shop-item">
+      <h3>Ranga "CHILLGUY"</h3>
+      <p>Just a chill guy...</p>
+      <button class="buy-button" onclick="openModal()">Kup za 30 PLN</button>
+    </div>
+  </section>
+</div>
+
+<footer>
+  &copy; 2025 RealChillTeam.
+</footer>
+
+<!-- Modal -->
+<div id="paymentModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2>Zakup przez Discord</h2>
+    <p>Aby zakupić tę usługę, utwórz <strong>ticket na naszym Discordzie</strong> i napisz, co chcesz kupić.<br><br>
+      <a href="https://discord.gg/twojserwer" target="_blank" style="color: #ffcc00;">Kliknij tutaj, aby dołączyć do Discorda</a>.
+    </p>
+  </div>
+</div>
+
+<script>
+  // Kopiowanie IP
+  function copyServerIP() {
+    navigator.clipboard.writeText('RealChillCraft.aternos.me').then(() => {
+      alert('✅ Skopiowano IP do schowka!');
+    });
+  }
+
+  // Pobierz liczbę graczy online
+  fetch('https://api.mcsrvstat.us/2/RealChillCraft.aternos.me')
+    .then(response => response.json())
+    .then(data => {
+      const playerCount = document.getElementById('player-count');
+      if (data.online) {
+        playerCount.textContent = `${data.players.online} / ${data.players.max}`;
+      } else {
+        playerCount.textContent = 'Offline';
+      }
+    })
+    .catch(() => {
+      document.getElementById('player-count').textContent = 'Błąd';
+    });
+
+  // Modal
+  function openModal() {
+    document.getElementById('paymentModal').style.display = 'block';
+  }
+
+  function closeModal() {
+    document.getElementById('paymentModal').style.display = 'none';
+  }
+
+  window.onclick = function (event) {
+    const modal = document.getElementById('paymentModal');
+    if (event.target == modal) {
+      closeModal();
+    }
+  }
+</script>
+
+</body>
+</html>
